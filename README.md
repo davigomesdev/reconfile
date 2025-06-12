@@ -1,6 +1,5 @@
 # Meu Projeto Go
 
-Projeto em Go para [descrição breve do projeto].  
 As migrações do banco de dados são aplicadas automaticamente ao iniciar o servidor.
 
 ## Requisitos
