@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:5000/api/
+@refreshToken = {{signin.response.body.data.refreshToken}}
+
+# @name signin
+POST {{baseUrl}}auth/signin
+
+{
+    "email": "davifid3@gmail.com",
+    "password": "123456"
+}
+
+### @name signup
+POST {{baseUrl}}auth/signup
+
+{
+    "name": "Davi Gomes do Carmo",
+    "email": "davifid3@gmail.com",
+    "password": "123456"
+}
+
+### @name refresh
+POST {{baseUrl}}auth/refresh
+
+{
+    "refreshToken": "{{refreshToken}}",
+}

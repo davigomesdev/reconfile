@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:5000/api/
+@supplierId = e57f028d-e178-46a2-8a61-529234c291d7
+@accessToken = {{signin.response.body.data.accessToken}}
+
+# @name signin
+POST {{baseUrl}}auth/signin
+
+{
+    "email": "davifid3@gmail.com",
+    "password": "123456"
+}
+
+
+### @name search
+GET {{baseUrl}}suppliers
+Authorization: Bearer {{accessToken}}
+
+### @name get
+GET {{baseUrl}}suppliers/{{supplierId}}
+Authorization: Bearer {{accessToken}}
+
+### @name get
+GET {{baseUrl}}suppliers/overview
+Authorization: Bearer {{accessToken}}
+
+### @name import
+POST {{baseUrl}}suppliers/import
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="reconfile-fornecedores.xlsx"
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+< ./assets/reconfile-fornecedores.xlsx
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

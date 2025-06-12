@@ -1,0 +1,67 @@
+@baseUrl = http://localhost:5000/api/
+@userId = 39a70ab7-17a1-4c28-862d-15cff3c2d216
+@accessToken = {{signin.response.body.data.accessToken}}
+
+# @name signin
+POST {{baseUrl}}auth/signin
+
+{
+    "email": "davifid3@gmail.com",
+    "password": "123456"
+}
+
+
+### @name search
+@page = 1
+@perPage = 15
+@sort = name
+@sortDir = asc
+@filter = davi
+
+GET {{baseUrl}}users?page={{page}}&perPage={{perPage}}&sort={{sort}}&sortDir={{sortDir}}&filter={{filter}}
+Authorization: Bearer {{accessToken}}
+
+### @name current
+GET {{baseUrl}}users/current
+Authorization: Bearer {{accessToken}}
+
+### @name get
+GET {{baseUrl}}users/{{userId}}
+Authorization: Bearer {{accessToken}}
+
+### @name create
+POST {{baseUrl}}users
+Authorization: Bearer {{accessToken}}
+
+{
+    "name": "Davi Gomes do Carmo",
+    "email": "davifid889@gmail.com",
+    "password": "123456"
+}
+
+### @name update
+PUT {{baseUrl}}users/{{userId}}
+Authorization: Bearer {{accessToken}}
+
+{
+    "name": "Davi Gomes do Carmo",
+    "email": "davifid79@gmail.com"
+}
+
+### @name updateCurrent
+PUT {{baseUrl}}users/current
+Authorization: Bearer {{accessToken}}
+
+{
+    "name": "Davi Gomes do Carmo",
+    "email": "davifid3@gmail.com"
+}
+
+### @name updateCurrent
+PATCH  {{baseUrl}}users/password
+Authorization: Bearer {{accessToken}}
+
+{
+    "oldPassword": "123456",
+    "newPassword": "123456"
+}
