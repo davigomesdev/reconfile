@@ -153,12 +153,12 @@ func (r *supplierRepository) GetOverview(ctx context.Context) (*contracts.Suppli
 
 	row := r.pool.QueryRow(ctx, `
         SELECT
-            COUNT(*) AS total_records,
-            SUM(billing_pre_tax_total) AS total_billing,
-            COUNT(DISTINCT subscription_id) AS total_subscribers,
-            COUNT(DISTINCT customer_id) AS total_customers
-        FROM suppliers
-        WHERE deleted_at IS NULL;
+			COUNT(*) AS total_records,
+			COALESCE(SUM(billing_pre_tax_total), 0) AS total_billing,
+			COUNT(DISTINCT subscription_id) AS total_subscribers,
+			COUNT(DISTINCT customer_id) AS total_customers
+		FROM suppliers
+		WHERE deleted_at IS NULL;
     `)
 	if err := row.Scan(&ov.TotalRecords, &ov.TotalBilling, &ov.TotalSubscribers, &ov.TotalCustomers); err != nil {
 		return nil, fmt.Errorf("erro ao obter overview geral: %w", err)
@@ -166,11 +166,11 @@ func (r *supplierRepository) GetOverview(ctx context.Context) (*contracts.Suppli
 
 	rows, err := r.pool.Query(ctx, `
         SELECT TO_CHAR(usage_date, 'YYYY-MM') AS year_month,
-               SUM(billing_pre_tax_total)::float8 AS total
-        FROM suppliers
-        WHERE deleted_at IS NULL
-        GROUP BY year_month
-        ORDER BY year_month;
+       		COALESCE(SUM(billing_pre_tax_total), 0)::float8 AS total
+		FROM suppliers
+		WHERE deleted_at IS NULL
+		GROUP BY year_month
+		ORDER BY year_month;
     `)
 	if err != nil {
 		return nil, errors.NewBadRequestError("Erro ao obter faturamento por mês")
